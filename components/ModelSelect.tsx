@@ -1,10 +1,12 @@
 'use client'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { useChatController } from "@/utils/hooks/useChatController";
+import { useStoreActions, useStoreState } from "@/utils/store/typedStoreHooks";
 
 const ModelSelect = () => {
-  const { model, setModel } = useChatController();
+  const model = useStoreState((state) => state.model);
+  const setModel = useStoreActions((action) => action.setModel);
+
   return (
     <Select value={model} onValueChange={(e) => setModel(e)}>
       <SelectTrigger className="w-[140px] sm:w-[180px]">

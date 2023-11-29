@@ -1,17 +1,34 @@
 'use client'
 
+import { v4 as uuid4 } from "uuid";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useChatController } from "@/utils/hooks/useChatController";
+import { useStoreActions, useStoreState } from "@/utils/store/typedStoreHooks";
+import { Chat } from "@/utils/types";
+
 
 interface ChatPageProps {
   params: { slug: string }
 }
 
-export default function Chat({ params }: ChatPageProps) {
-  const { messages, messagesEndRef } = useChatController();
+export default function SlugChat({ params: { slug } }: ChatPageProps) {
+  const { messages, chats } = useStoreState((state) => state);
+  const { setChats, setMessages } = useStoreActions((action) => action);
+
+  const chat = chats.find((c) => c.id == slug);
+  if (chat) {
+    setMessages(chat.messages);
+  } else {
+    const newChat: Chat = {
+      id: slug,
+      title: `Chat ${chats.length - 1}`,
+      messages: messages,
+      createdAt: ""
+    };
+  }
+
 
   return (
     <ScrollArea className="w-full h-full flex justify-items-center">
@@ -38,7 +55,7 @@ export default function Chat({ params }: ChatPageProps) {
             </div>
           </div>
         ))}
-        <div className="h-[30px]" ref={messagesEndRef}></div>
+        <div className="h-[30px]"></div>
       </div>
     </ScrollArea>
   )

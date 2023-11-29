@@ -13,7 +13,7 @@ export default function Sidebar() {
   const handlMenu = () => { }
 
   return (
-    <div className='max-w-[20%] h-full w-[20%] hidden sm:flex'>
+    <React.Fragment>
       <div className='w-full h-full flex flex-col border rounded-md p-2'>
         <Button className='w-full flex justify-between items-center ' variant='outline'>
           <p>New Chat</p>
@@ -26,6 +26,6 @@ export default function Sidebar() {
             : <MdOutlineArrowBackIosNew fill='white' color='primary' />}
         </Button>
       </div>
-    </div>
+    </React.Fragment>
   );
 }

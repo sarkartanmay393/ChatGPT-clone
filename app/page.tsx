@@ -1,10 +1,10 @@
 'use client'
 
 import { Card } from "@/components/ui/card";
-import { useChatController } from "@/components/hooks/useChatController.tsz";
 import ChatgptLogo from "@/components/icons/chatgpt";
+import { useChatController } from "@/utils/hooks/useChatController";
 
-export default async function Home() {
+export default function Home() {
   const { useSuggestion } = useChatController();
 
   return (
@@ -17,7 +17,7 @@ export default async function Home() {
       </div>
       <div className='w-full sm:w-[75%] grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4'>
         {Suggestions.map((s, i) => (
-          <Card onClick={() => { useSuggestion(s.text) }} key={i} className='p-2 px-3 cursor-pointer font-normal hover:bg-secondary '>
+          <Card key={i} onClick={() => useSuggestion(s.text)} className='p-2 px-3 cursor-pointer font-normal hover:bg-secondary '>
             <h3 className=''>{s.text.substring(0, s.breaker)}</h3>
             <p className='text-gray-600'>{s.text.substring(s.breaker, s.text.length)}</p>
           </Card>

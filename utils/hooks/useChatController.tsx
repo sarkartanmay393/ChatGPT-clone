@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Message } from '../../utils/types';
+import { Message } from '../types';
 
 export function useChatController(): {
   model: string,
@@ -43,6 +43,12 @@ export function useChatController(): {
       inputRef.current.focus();
     }
   }
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages])
 
   return { model, setModel, input, setInput, messages, setMessages, useSuggestion, handleSend, inputRef, messagesEndRef };
 }

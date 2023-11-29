@@ -3,7 +3,7 @@
 import * as React from 'react'
 
 import { cn } from '@/utils/shadcn'
-import { useAtBottom } from '@/components/hooks/useAtBottom'
+import { useAtBottom } from '@/utils/hooks/useAtBottom'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { IoIosArrowRoundDown } from "react-icons/io";
 

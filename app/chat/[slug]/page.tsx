@@ -1,24 +1,17 @@
 'use client'
 
-import { useEffect } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useChatController } from "@/components/hooks/useChatController";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useChatController } from "@/utils/hooks/useChatController";
 
 interface ChatPageProps {
   params: { slug: string }
 }
 
 export default function Chat({ params }: ChatPageProps) {
-  const { messages, messagesEndRef, } = useChatController();
-  console.log(params.slug)
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages])
+  const { messages, messagesEndRef } = useChatController();
 
   return (
     <ScrollArea className="w-full h-full flex justify-items-center">

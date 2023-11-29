@@ -8,12 +8,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
-import { IoMdArrowUp } from "react-icons/io";
 
-import { useChatController } from "@/components/hooks/useChatController.tsz";
-import { useEnterSubmit } from "@/components/hooks/useEnterSubmit";
+
+import { useEnterSubmit } from "@/utils/hooks/useEnterSubmit";
+import { useChatController } from '@/utils/hooks/useChatController';
+import { IoMdArrowUp } from 'react-icons/io';
+import { Button } from './ui/button';
+import { Textarea } from './ui/textarea';
 
 interface ChatBodyProps {
   children: React.ReactNode;

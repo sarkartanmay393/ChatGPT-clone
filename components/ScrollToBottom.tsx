@@ -3,12 +3,12 @@
 import * as React from 'react'
 
 import { cn } from '@/utils/shadcn'
-import { useAtBottom } from '@/utils/hooks/use-at-bottom'
+import { useAtBottom } from '@/components/hooks/useAtBottom'
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { IoIosArrowRoundDown } from "react-icons/io";
 
 export function ButtonScrollToBottom({ className, ...props }: ButtonProps) {
-  const isAtBottom = useAtBottom()
+  const isAtBottom = useAtBottom();
 
   return (
     <Button

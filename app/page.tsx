@@ -1,25 +1,47 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
+'use client'
 
-import { FaRegEdit } from "react-icons/fa";
-import Sidebar from '@/components/Sidebar';
-import { Input } from '@/components/ui/input';
-
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { MdOutlineArrowBackIosNew } from "react-icons/md";
-import { IoMdArrowUp } from "react-icons/io";
-import { Card } from '@/components/ui/card';
-import GPTLogo from './assets/chatgpt.svg';
-import Image from 'next/image';
-import ChatBody from '@/components/Chatbody';
-
+import { Card } from "@/components/ui/card";
+import { useChatController } from "@/components/hooks/useChatController.tsz";
+import ChatgptLogo from "@/components/icons/chatgpt";
 
 export default async function Home() {
+  const { useSuggestion } = useChatController();
 
   return (
-    <div className="p-2 w-full h-full flex items-center justify-center">
-      <Sidebar />
-      <ChatBody />
+    <div className="w-full h-full flex flex-col items-center">
+      <div className='w-full sm:w-[75%] h-full flex flex-col items-center justify-center gap-2'>
+        <div className="bg-white rounded-full p-2">
+          <ChatgptLogo />
+        </div>
+        <h4 className="text-xl ">How Can I Help You?</h4>
+      </div>
+      <div className='w-full sm:w-[75%] grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4'>
+        {Suggestions.map((s, i) => (
+          <Card onClick={() => { useSuggestion(s.text) }} key={i} className='p-2 px-3 cursor-pointer font-normal hover:bg-secondary '>
+            <h3 className=''>{s.text.substring(0, s.breaker)}</h3>
+            <p className='text-gray-600'>{s.text.substring(s.breaker, s.text.length)}</p>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
+
+const Suggestions = [
+  {
+    text: "Generate Project Idea for becoming ultimate engineer",
+    breaker: 22,
+  },
+  {
+    text: "Generate Project Idea for becoming ultimate engineer",
+    breaker: 22,
+  },
+  {
+    text: "Generate Project Idea for becoming ultimate engineer",
+    breaker: 22,
+  },
+  {
+    text: "Generate Project Idea for becoming ultimate engineer",
+    breaker: 22,
+  },
+];

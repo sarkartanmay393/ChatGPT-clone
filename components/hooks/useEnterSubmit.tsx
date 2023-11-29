@@ -1,8 +1,10 @@
-import { useRef, type RefObject } from 'react'
+'use client'
+
+import { RefObject, useRef } from 'react';
 
 export function useEnterSubmit(): {
   formRef: RefObject<HTMLFormElement>
-  onKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void
+  handleKeyDown: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void
 } {
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -19,5 +21,5 @@ export function useEnterSubmit(): {
     }
   }
 
-  return { formRef, onKeyDown: handleKeyDown }
+  return { formRef, handleKeyDown }
 }

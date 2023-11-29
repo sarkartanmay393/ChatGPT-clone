@@ -10,12 +10,10 @@ import { FaRegEdit } from "react-icons/fa";
 
 export default function Sidebar() {
   const [showMenu, setShowMenu] = React.useState(true);
-  const handlMenu = () => {
-    // setShowMenu(!showMenu)
-  }
+  const handlMenu = () => { }
 
   return (
-    <div className='max-w-[20%] h-full w-[20%] flex '>
+    <div className='max-w-[20%] h-full w-[20%] hidden sm:flex'>
       <div className='w-full h-full flex flex-col border rounded-md p-2'>
         <Button className='w-full flex justify-between items-center ' variant='outline'>
           <p>New Chat</p>

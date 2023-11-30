@@ -14,7 +14,44 @@ export interface Chat {
   createdAt: string;
 }
 
+const Users = {
+  useid: {
+    email: "heloo@s.com",
+    chats: [
+      {
+        id: "chatid1",
+        title: "ranodm",
+        messages: [
+          { id: "m1", text: "string;", type: "ai", sentOn: "string;" },
+          { id: "m2;", text: "jnkjj", type: "ai", sentOn: "string;" },
+        ],
+      },
+    ],
+  },
+  useid2: {
+    email: "heloo@s.com",
+    chats: [
+      {
+        id: "chatid1",
+        title: "ranodm",
+        messages: [
+          { id: "m1", text: "string;", type: "ai", sentOn: "string;" },
+          { id: "m2;", text: "jnkjj", type: "ai", sentOn: "string;" },
+        ],
+      },
+    ],
+  },
+};
+
+export interface User {
+  id: string;
+  email: string;
+}
+
 export interface GlobalStore {
+  user: User | null;
+  setUser: Action<GlobalStore, User>;
+
   input: string;
   model: string;
   messages: Message[];

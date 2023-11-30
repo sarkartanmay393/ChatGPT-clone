@@ -1,12 +1,17 @@
 import { action } from "easy-peasy";
-import { type Message, type GlobalStore, type Chat } from "../types";
+import { type Message, type GlobalStore, type Chat, type User } from "../types";
 
 const globalStore: GlobalStore = {
+  user: null,
+
   input: "",
   chats: [],
   messages: [],
   model: "GPT 3.5",
 
+  setUser: action((state, payload: User) => {
+    state.user = payload;
+  }),
   setModel: action((state, payload: string) => {
     state.model = payload;
   }),

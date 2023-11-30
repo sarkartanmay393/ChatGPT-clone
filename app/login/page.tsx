@@ -20,13 +20,24 @@ export default async function Login({ searchParams }: LoginModalProps) {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
     if (error) {
       return redirect('/login?message=Could not authenticate user')
+    }
+
+    const getUserFromDB = await supabase.from('users').select('*').eq('id', data.user.id);
+    if (getUserFromDB.error) {
+      console.log(`Error while getting user data from db: ` + getUserFromDB.error.message);
+    }
+    if (!getUserFromDB.data) {
+      const insertUserToDB = await supabase.from('users').insert({ id: data.user?.id, email: data.user?.email });
+      if (insertUserToDB.error) {
+        console.log(`Error while insert user data to db: ` + insertUserToDB.error.message);
+      }
     }
 
     return redirect('/chat')
@@ -40,7 +51,7 @@ export default async function Login({ searchParams }: LoginModalProps) {
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -50,6 +61,11 @@ export default async function Login({ searchParams }: LoginModalProps) {
 
     if (error) {
       return redirect('/login?message=Could not authenticate user')
+    }
+
+    const insertUserToDB = await supabase.from('users').insert({ id: data.user?.id, email: data.user?.email });
+    if (insertUserToDB.error) {
+      console.log(insertUserToDB.error);
     }
 
     return redirect('/login?message=Login with your credentials')

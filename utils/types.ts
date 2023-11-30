@@ -1,4 +1,5 @@
 import { type Action } from "easy-peasy";
+import { v4 } from "uuid";
 
 export interface Message {
   id: string;
@@ -7,11 +8,26 @@ export interface Message {
   sentOn: string;
 }
 
+export interface IMessage {
+  id: typeof v4;
+  chat_id: string;
+  text: string;
+  type: "user" | "ai";
+  createdAt: string;
+}
+
 export interface Chat {
   id: string;
   title: string;
   messages: Message[];
   createdAt: string;
+}
+
+export interface IChat {
+  id: string;
+  user_id: string;
+  title: string;
+  created_at: string;
 }
 
 const Users = {

@@ -1,39 +1,31 @@
-'use client'
-
-import { v4 as uuid4 } from "uuid";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useStoreActions, useStoreState } from "@/utils/store/typedStoreHooks";
-import { Chat } from "@/utils/types";
+import { IMessage } from "@/utils/types";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
 
 
 interface ChatPageProps {
   params: { slug: string }
 }
 
-export default function SlugChat({ params: { slug } }: ChatPageProps) {
-  const { messages, chats } = useStoreState((state) => state);
-  const { setChats, setMessages } = useStoreActions((action) => action);
+export default async function SlugChat({ params: { slug } }: ChatPageProps) {
+  const cookie = cookies();
+  const supabase = createClient(cookie);
 
-  const chat = chats.find((c) => c.id == slug);
-  if (chat) {
-    setMessages(chat.messages);
-  } else {
-    const newChat: Chat = {
-      id: slug,
-      title: `Chat ${chats.length - 1}`,
-      messages: messages,
-      createdAt: ""
-    };
+  const messages = await supabase.from('messages').select('*').eq('chat_id', slug);
+  if (messages.error) {
+    console.log(`Error: `, messages.error);
   }
+  console.log(messages.data)
 
 
   return (
     <ScrollArea className="w-full h-full flex justify-items-center">
       <div id="msgscrollview" className='w-full h-full grid grid-cols-1 justify-items-center gap-10'>
-        {messages.map((m, i) => (
+        {messages.data && messages.data.map((m: IMessage, i) => (
           <div key={i} className='w-full sm:w-[75%] h-fit p-2 px-3 flex gap-2'>
             <div className={`w-[24px] h-[24px] rounded-full ${m.type === 'ai' ? 'bg-blue-400' : 'bg-green-500'} mt-[2px]`}></div>
             <div className="w-full flex flex-col gap-0">

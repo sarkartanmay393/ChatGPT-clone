@@ -5,6 +5,7 @@ import StoreProvider from './StoreProvider';
 
 import { cookies } from 'next/headers';
 import { createClient } from '@/utils/supabase/server'
+import SupabaseProvider from './StoreProvider';
 
 export const metadata = {
   title: 'ChadGPT',
@@ -27,11 +28,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground overflow-hidden">
-        <StoreProvider>
+        <SupabaseProvider>
           <main className="h-screen w-screen">
             {children}
           </main>
-        </StoreProvider>
+        </SupabaseProvider>
       </body>
     </html >
   )

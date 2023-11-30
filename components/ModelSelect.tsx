@@ -1,11 +1,10 @@
 'use client'
 
+import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { useStoreActions, useStoreState } from "@/utils/store/typedStoreHooks";
 
 const ModelSelect = () => {
-  const model = useStoreState((state) => state.model);
-  const setModel = useStoreActions((action) => action.setModel);
+  const [model, setModel] = useState('GPT 3.5');
 
   return (
     <Select value={model} onValueChange={(e) => setModel(e)}>

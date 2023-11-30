@@ -3,34 +3,47 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
-import { v4 as uuidv4 } from 'uuid';
 
 import { useEnterSubmit } from "@/utils/hooks/useEnterSubmit";
 import { IoMdArrowUp } from "react-icons/io";
-import { useStoreActions, useStoreState } from "@/utils/store/typedStoreHooks";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 
 const InputForm = () => {
-  const { input } = useStoreState((state) => state);
-  const { setInput, setOneMessage } = useStoreActions((action) => action);
+  const [input, setInput] = useState('');
   const { handleKeyDown } = useEnterSubmit();
 
-  const router = useRouter();
   const { slug } = useParams();
 
   const handleSend = () => {
     if (!slug) {
-      const chatId = uuidv4();
-      router.push('/chat/' + chatId)
+      (async () => {
+        const resp = await fetch('/api/chat', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await resp.json();
+        console.log(data)
+      })();
+    } else {
+      (async () => {
+        const js = JSON.stringify({
+          text: input,
+          chat_id: slug,
+          type: 'user',
+        });
+        const resp = await fetch('/api/chat/' + slug, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: js,
+        });
+        const data = await resp.json();
+        console.log(data)
+      })();
     }
-    const time = new Date().getTime().toString();
-    setOneMessage({
-      id: uuidv4(),
-      text: input,
-      type: 'user',
-      sentOn: time
-    });
-    setInput('');
   }
 
   return (

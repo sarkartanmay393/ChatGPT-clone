@@ -1,7 +1,9 @@
 {
+  "name": "chatgpt_clone",
+  "version": "0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start"
   },
